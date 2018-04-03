@@ -118,13 +118,13 @@ namespace Leapmotion_Serial
                 float z = 0;
                 float left = Transform(hand.PalmPosition).x - hand.PalmWidth / 2 * xratio;
                 float right = left + hand.PalmWidth * xratio;
-                float top = /*Transform(hand.PalmPosition).z - hand.PalmWidth / 2 * zratio;*/ 10000;
-                float down = -10000;
+                float top = Transform(hand.PalmPosition).z + hand.PalmWidth / 2 * zratio;
+                float down = top - hand.PalmWidth * zratio;
                 for(int i = 0;i <= 7; i++)
                 {
                     for(int j = 0;j <= 7; j++)
                     {
-                        if (IsInRect(new Vector(85 * j - 340, 0, z),left,right,top,down)){
+                        if (IsInRect(new Vector(85 * j - 340, 0, 85 * i - 340),left,right,top,down)){
                             LEDs[i,j] = 1;
                             rects[i * 8 + j].Fill = Brushes.Black;
                         }

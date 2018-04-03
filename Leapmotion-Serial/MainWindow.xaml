@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Leapmotion_Serial"
         mc:Ignorable="d"
-        Title="MainWindow" Height="340.337" Width="969.8">
+        Title="MainWindow" Height="340.337" Width="933.018">
     <Grid>
-        <Label x:Name="label1" Content="Label"  HorizontalAlignment="Left" Height="94" Margin="10,10,0,0" VerticalAlignment="Top" Width="498"/>
-        <Label x:Name="label2" Content="Label"  HorizontalAlignment="Left" Height="92" Margin="10,121,0,0" VerticalAlignment="Top" Width="498"/>
-        <Label x:Name="label3" Content="Label"  HorizontalAlignment="Left" Height="78" Margin="10,222,0,0" VerticalAlignment="Top" Width="498"/>
+        <Label x:Name="label1" Content="Label"  HorizontalAlignment="Left" Height="94" Margin="10,10,0,0" VerticalAlignment="Top" Width="525"/>
+        <Label x:Name="label2" Content="Label"  HorizontalAlignment="Left" Height="92" Margin="10,121,0,0" VerticalAlignment="Top" Width="525"/>
+        <Label x:Name="label3" Content="Label"  HorizontalAlignment="Left" Height="78" Margin="10,222,0,0" VerticalAlignment="Top" Width="525"/>
         <Grid x:Name="Rects">
             <Rectangle x:Name="r00" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="26" Margin="571,28,0,0" Stroke="Black" VerticalAlignment="Top" Width="25"/>
             <Rectangle x:Name="r01" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="26" Margin="601,28,0,0" Stroke="Black" VerticalAlignment="Top" Width="25"    />
@@ -76,7 +76,7 @@
             <Rectangle x:Name="r76" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="26" Margin="751,245,0,0" Stroke="Black" VerticalAlignment="Top" Width="25"/>
             <Rectangle x:Name="r77" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="26" Margin="781,245,0,0" Stroke="Black" VerticalAlignment="Top" Width="25"/>
         </Grid>
-        
+
 
     </Grid>
 </Window>

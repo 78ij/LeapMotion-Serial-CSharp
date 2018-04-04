@@ -35,8 +35,7 @@ namespace Leapmotion_Serial
         Byte[,] LEDs = new Byte[8, 8];
         List<Label> labels = new List<Label>();
         List<Rectangle> rects = new List<Rectangle>();
-
-        PortConnector port = new PortConnector();
+        public PortConnector port = new PortConnector();
 
         public LeapListener(Label[] label, Grid g)
         {
@@ -100,23 +99,11 @@ namespace Leapmotion_Serial
             return a;
         }
 
-        public void tryConnectPort()
-        {
-            if (port.IsPortOpen())
-                return;
-            try
-            {
-                port.OpenPort();
-            }
-            catch (Exception e)
-            {
-                //MessageBox.Show(e.Message);
-            }
-        }
+
 
         public void OnInit(Controller controller)
         {
-            tryConnectPort();
+
         }
         public void OnConnect(object sender, DeviceEventArgs args)
         {
@@ -148,13 +135,11 @@ namespace Leapmotion_Serial
                 double width = hand.PalmWidth;
                 // Calculate the hand's pitch, roll, and yaw angles
 
-                message = String.Format("Hand id: {0}, palm position: {1}, fingers: {2}, width:{3}\nHand pitch: {0} degrees, roll: {1} degrees, yaw: {2} degrees",
+                message = String.Format("Hand id: {0}, palm position: {1}, fingers: {2}, width:{3}\nHand pitch: {4} degrees, roll: {5} degrees, yaw: {6} degrees",
                   hand.Id,
                   hand.PalmPosition, 
                   hand.Fingers.Count, 
                   hand.PalmWidth * xratio,
-
-                  "",
                   direction.Pitch * 180.0f / (float)Math.PI,
                   normal.Roll * 180.0f / (float)Math.PI,
                   direction.Yaw * 180.0f / (float)Math.PI
@@ -196,8 +181,20 @@ namespace Leapmotion_Serial
     }
     public partial class MainWindow : Window
     {
-
-
+        PortConnector port;
+        public void tryConnectPort(string portname)
+        {
+            if (port.IsPortOpen())
+                return;
+            try
+            {
+                port.OpenPort(portname);
+            }
+            catch (Exception e)
+            {
+                //MessageBox.Show(e.Message);
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -206,10 +203,19 @@ namespace Leapmotion_Serial
                 controller.SetPolicy(Leap.Controller.PolicyFlag.POLICY_ALLOW_PAUSE_RESUME);
                 Label[] l = new Label[] { label1, label2, label3 };
                 LeapListener listener = new LeapListener(l, Rects);
+                port = listener.port;
                 listener.InitLED(true);
                 controller.Device += listener.OnConnect;
                 controller.Disconnect += listener.OnDisconnect;
                 controller.FrameReady += listener.OnFrame;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(COM.Text != "")
+            {
+                tryConnectPort(COM.Text);
             }
         }
     }

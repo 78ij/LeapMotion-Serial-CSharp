@@ -9,12 +9,12 @@ namespace Leapmotion_Serial
 
         private SerialPort device = new SerialPort();
 
-        public void OpenPort()
+        public void OpenPort(string portname)
         {
-            device.PortName = "";               // 端口名
+            device.PortName = portname;               // 端口名
             device.BaudRate = 60 * 66 * 8;      // 波特率：60次刷新/秒 * 66bytes/一次刷新 * 8bits/byte
             device.Parity = Parity.None;        // 奇偶校验
-            device.DataBits = 8;                // 8位的数据位
+            device.DataBits = 8 * 8;                // 8位的数据位
             device.StopBits = StopBits.One;     // 使用1个停止位
             device.Handshake = Handshake.None;  // 握手协议：待定
 

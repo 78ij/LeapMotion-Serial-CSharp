@@ -44,14 +44,20 @@ namespace Leapmotion_Serial
             {
                 labels.Add(l);
             }
-            InitLED();
+            InitLED(true);
             foreach (Rectangle r in g.Children)
             {
                 rects.Add(r);
             }
         }
+        public Byte Clamp(int color)
+        {
+            if (color > 255) return 255;
+            else if (color < 0) return 0;
+            else return (Byte)color;
+        }
         //LED光栅化方法：中心为0,0，半径为85
-        public void InitLED()
+        public void InitLED(bool isfirst)
         {
             for (int i = 0; i <= 7; i++)
             {
@@ -62,7 +68,19 @@ namespace Leapmotion_Serial
             }
             foreach (Rectangle r in rects)
             {
-                r.Fill = Brushes.White;
+                if (isfirst)
+                {
+                    r.Fill = Brushes.White;
+                }
+                else
+                {
+                    SolidColorBrush oldbrush = (SolidColorBrush)r.Fill;
+                    Color oldcolor = oldbrush.Color;
+                    if (oldcolor.R == 255) continue;
+                    else r.Fill = new SolidColorBrush(Color.FromRgb(Clamp(oldcolor.R + 10),
+                        Clamp(oldcolor.R + 10),
+                        Clamp(oldcolor.R + 10)));
+                }
             }
         }
         bool IsInRect(Vector point, float left, float right, float top, float down)
@@ -113,7 +131,7 @@ namespace Leapmotion_Serial
         public void OnFrame(object sender, FrameEventArgs args)
         {
             Frame frame = args.frame;
-            InitLED();
+            InitLED(false);
 
             string message = String.Format(
               "PortState: {0}\nFrame id: {1}, timestamp: {2}, hands: {3}",
@@ -188,6 +206,7 @@ namespace Leapmotion_Serial
                 controller.SetPolicy(Leap.Controller.PolicyFlag.POLICY_ALLOW_PAUSE_RESUME);
                 Label[] l = new Label[] { label1, label2, label3 };
                 LeapListener listener = new LeapListener(l, Rects);
+                listener.InitLED(true);
                 controller.Device += listener.OnConnect;
                 controller.Disconnect += listener.OnDisconnect;
                 controller.FrameReady += listener.OnFrame;
